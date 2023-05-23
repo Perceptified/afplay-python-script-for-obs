@@ -8,10 +8,14 @@
 import sys
 
 directory=sys.argv[0]
+numberOfArguments=len(sys.argv)
+
 if(sys.argv[1]==""):
     volume=0.1
 else:
     volume=sys.argv[1]
-for i in range(1, n):
+
+# Start at 1 so the command name itself is not used alongside
+for i in range(1, numberOfArguments):
     print(sys.argv[i], end = " ")
 
