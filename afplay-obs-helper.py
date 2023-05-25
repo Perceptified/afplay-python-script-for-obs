@@ -6,16 +6,36 @@
 # 
 
 import sys
+import os
 
-directory=sys.argv[0]
+"""
+afplay-obs-helper.py
+
+this program takes a directory as input, walks that directory, either selects a file at random (see options for details)
+or from top to bottom, writes the track name and title out to a text file which is currently intended to be read
+by OBS (open broadcaster software) to be then displayed in the live stream feed.
+
+Usage:
+afplay-obs-helper.py -[hVvr] <DIRECTORY>
+
+Options:
+-h --help: Display help text and exit.
+-V --version: Display version information and exit.
+-v --volume: play at volume (passed on to afplay, any volume over 1 will be blocked by this program for the sake of the user's ears.)
+-r --random: the audio files in the directory will be played in a random order.
+
+"""
+
+directory=sys.argv[1]
 numberOfArguments=len(sys.argv)
+volume = 0.3
 
-if(sys.argv[1]==""):
-    volume=0.1
-else:
-    volume=sys.argv[1]
+def getDirectoryContent(directory):
+    # print(directory)
+    files = []
+    for candidate in os.listdir(directory):
+        if not candidate.startswith(".") and not candidate == "Thumbs.db" and not os.path.isdir(os.path.join(directory, candidate)) == True:
+            files.append(candidate)
+    return files
 
-# Start at 1 so the command name itself is not used alongside
-for i in range(1, numberOfArguments):
-    print(sys.argv[i], end = " ")
-
+print(getDirectoryContent(directory))
