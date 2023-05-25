@@ -7,6 +7,7 @@
 
 import sys
 import os
+import random
 
 """
 afplay-obs-helper.py
@@ -28,7 +29,8 @@ Options:
 
 directory=sys.argv[1]
 numberOfArguments=len(sys.argv)
-volume = 0.3
+volume = 0.2
+tracks = []
 
 def getDirectoryContent(directory):
     # print(directory)
@@ -38,4 +40,15 @@ def getDirectoryContent(directory):
             files.append(candidate)
     return files
 
-print(getDirectoryContent(directory))
+def shuffleTracks(tracks):
+    indices = [x for x in range(len(tracks))]
+    i = random.choice(indices)
+    j = random.choice(indices)
+    tracks[i], tracks[j] = tracks[j], tracks[i]
+    return tracks
+
+tracks = getDirectoryContent(directory)
+if sys.argv.__contains__("-r") or sys.argv.__contains__("--random"):
+    tracks = shuffleTracks(tracks)
+for i in tracks:
+    print(i)
