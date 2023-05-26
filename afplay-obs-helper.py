@@ -7,7 +7,9 @@
 
 import sys
 import os
+import subprocess
 import random
+import re
 
 """
 afplay-obs-helper.py
@@ -69,3 +71,28 @@ else:
 for i in tracks:
     print(i)
 
+# def escapeSpacesInTrackNames(tracks):
+#    for index in range(len(tracks)):
+#        tracks[index] = @str(tracks[index])
+#    return tracks
+
+# tracks = escapeSpacesInTrackNames(tracks)
+
+trackPath = os.path.join(directory, tracks[0])
+# trackpath = os.path.abspath(trackPath)
+print(trackPath)
+subprocess.run("afplay", "-v", str(volume), "\"" + trackPath + "\"")
+# subprocess.run("afplay" + " -v " + str(volume))
+# subprocess.run("/usr/bin/afplay" + " -v " + str(volume) + " " +  "\"" + trackPath + "\"")
+# userInput = input("Type: Exit (to stop) Next (to jump to next track)")
+
+# while userInput!="Exit" or userInput!="exit":
+    # for track in tracks:
+        # trackPath = os.path.join(directory, track)
+        # track = track.translate(str.maketrans({' ' : '\ '}))
+        # print(track)
+        # track = os.path.normpath(directory + track)
+        # print(track)
+        # track = track.replace(r' ', '\ ')
+        # track = re.sub(" ", r'\ ', track)
+        # subprocess.run("afplay" + " -v " + str(volume) + " " + trackPath)
