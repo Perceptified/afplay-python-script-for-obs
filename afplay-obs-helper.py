@@ -38,17 +38,34 @@ def getDirectoryContent(directory):
     for candidate in os.listdir(directory):
         if not candidate.startswith(".") and not candidate == "Thumbs.db" and not os.path.isdir(os.path.join(directory, candidate)) == True:
             files.append(candidate)
+    # print(files)
     return files
 
 def shuffleTracks(tracks):
     indices = [x for x in range(len(tracks))]
     i = random.choice(indices)
     j = random.choice(indices)
-    tracks[i], tracks[j] = tracks[j], tracks[i]
+    for index in range(len(tracks)):
+        tracks[i], tracks[j] = tracks[j], tracks[i]
     return tracks
 
+def getShuffleSwitch(arguments):
+    try:
+        arguments.index("-r") or arguments.index("--random")
+        shuffleSwitch = True
+        # print(shuffleSwitch)
+        return shuffleSwitch
+    except ValueError:
+        shuffleSwitch = False
+        # print(shuffleSwitch)
+        return shuffleSwitch
+    
 tracks = getDirectoryContent(directory)
-if sys.argv.__contains__("-r") or sys.argv.__contains__("--random"):
+
+if getShuffleSwitch(sys.argv) == True:
     tracks = shuffleTracks(tracks)
+else:
+    tracks = sorted(tracks)
 for i in tracks:
     print(i)
+
